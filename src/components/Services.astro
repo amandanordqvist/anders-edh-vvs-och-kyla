@@ -1,0 +1,68 @@
+---
+import { steps } from '../data/site';
+---
+
+<section class="section section--tint" id="tjanster">
+  <div class="container">
+    <header class="section__head" data-reveal>
+      <p class="eyebrow">Totalentreprenad</p>
+      <h2>Från första samtalet till färdig anläggning</h2>
+      <p>
+        Vi ansvarar för hela kedjan – du har en kontaktperson genom hela projektet och en installatör som är
+        specialutbildad inom värmepumpsteknik.
+      </p>
+    </header>
+
+    <ol class="steps">
+      {
+        steps.map((step, i) => (
+          <li class="step" data-reveal>
+            <span class="step__num" aria-hidden="true">{i + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="features">
+      <div class="feature" data-reveal>
+        <h3>Service av värmepumpar</h3>
+        <p>
+          Regelbunden service håller värmepumpen effektiv och förlänger livslängden. Vi servar och felsöker
+          IVT-värmepumpar i Hudiksvall med omnejd.
+        </p>
+      </div>
+      <div class="feature" data-reveal>
+        <h3>VVS- och rörarbeten</h3>
+        <p>
+          Vi utför alla typer av VVS- och rörarbeten – installationer, reparationer och servicejobb. Alla uppdrag utförs
+          med kvalitet, engagemang och noggrannhet.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps { list-style: none; margin: 0 0 48px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .step { position: relative; background: #fff; border-radius: var(--radius-lg); padding: 30px 26px; box-shadow: var(--shadow); }
+  .step p { color: var(--muted); font-size: 0.98rem; margin: 0; }
+  .step__num {
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--navy-800); color: #fff; font-family: var(--font-head); font-weight: 800; margin-bottom: 18px;
+  }
+  .step:not(:last-child)::after {
+    content: ''; position: absolute; top: 52px; right: -22px; width: 22px; height: 2px; background: var(--copper-500);
+  }
+
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .feature { border-left: 4px solid var(--copper-500); background: #fff; border-radius: 0 var(--radius) var(--radius) 0; padding: 26px 30px; }
+  .feature p { color: var(--muted); margin: 0; }
+
+  @media (max-width: 1080px) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .step:not(:last-child)::after { display: none; }
+  }
+  @media (max-width: 600px) { .steps, .features { grid-template-columns: 1fr; } }
+</style>

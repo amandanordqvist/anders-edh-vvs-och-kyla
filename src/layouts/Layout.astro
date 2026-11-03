@@ -1,0 +1,66 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/archivo';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import ogSource from '../assets/img/servicebil-hudiksvall.jpg';
+import { company } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const og = await getImage({ src: ogSource, width: 1200, format: 'jpg' });
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(og.src, Astro.site).href : og.src;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HVACBusiness',
+  name: company.name,
+  description:
+    'Auktoriserad återförsäljare och installatör av IVT Värmepumpar i Hudiksvall. Installation och service av bergvärme, jordvärme, luft/vatten, luft/luft och frånluft samt VVS- och rörarbeten.',
+  telephone: company.phoneE164,
+  foundingDate: String(company.founded),
+  image: ogImage,
+  ...(canonical && { url: canonical }),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: company.street,
+    postalCode: company.postalCode,
+    addressLocality: company.city,
+    addressCountry: 'SE',
+  },
+  areaServed: 'Hudiksvall med omnejd',
+};
+---
+
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f2a4a" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <script is:inline>
+      if ('IntersectionObserver' in window) document.documentElement.classList.add('js');
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Hoppa till innehållet</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,44 @@
+---
+import { guarantees } from '../data/site';
+---
+
+<section class="section section--dark" id="trygghet">
+  <div class="container">
+    <header class="section__head" data-reveal>
+      <p class="eyebrow">Trygghet som ingår från dag ett</p>
+      <h2>Garanti och försäkring i samma paket</h2>
+      <p>Vid köp av en IVT-värmepump via oss får du ett komplett skyddsprogram som kombinerar garanti och försäkring.</p>
+    </header>
+
+    <div class="shields">
+      {
+        guarantees.map((g) => (
+          <div class:list={['shield', { 'shield--accent': g.accent }]} data-reveal>
+            <span class="shield__num">
+              {g.num} <small>år</small>
+            </span>
+            <h3>{g.title}</h3>
+            <p>{g.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .shields { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .shield {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg); padding: 30px 26px;
+  }
+  .shield h3 { color: #fff; }
+  .shield p { margin: 0; font-size: 0.97rem; }
+  .shield__num { display: block; font-family: var(--font-head); font-weight: 800; font-size: 3rem; line-height: 1; color: #fff; margin-bottom: 16px; }
+  .shield__num small { font-size: 1.1rem; font-weight: 700; color: var(--copper-300); }
+  .shield--accent { background: var(--copper-500); border-color: var(--copper-500); color: #fff; }
+  .shield--accent .shield__num small { color: #ffe1cb; }
+
+  @media (max-width: 1080px) { .shields { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .shields { grid-template-columns: 1fr; } }
+</style>

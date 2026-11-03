@@ -1,0 +1,140 @@
+---
+import Icon from './Icon.astro';
+import { company, inquiryTypes } from '../data/site';
+---
+
+<section class="section" id="kontakt">
+  <div class="container contact">
+    <div data-reveal>
+      <p class="eyebrow">Kontakt</p>
+      <h2>Kostnadsfri rådgivning, besiktning och energikalkyl</h2>
+      <p class="lead">
+        Välkommen att kontakta {company.name}! Ring, mejla eller skicka en förfrågan via formuläret så hör vi av oss.
+      </p>
+
+      <ul class="contact__list">
+        <li>
+          <span class="contact__icon"><Icon name="phone" /></span>
+          <div><span class="contact__label">Telefon</span><a href={company.phoneHref}>{company.phone}</a></div>
+        </li>
+        <li>
+          <span class="contact__icon"><Icon name="mail" /></span>
+          <div><span class="contact__label">E-post</span><a href={`mailto:${company.email}`}>Skicka e-post</a></div>
+        </li>
+        <li>
+          <span class="contact__icon"><Icon name="pin" /></span>
+          <div>
+            <span class="contact__label">Adress</span>
+            <a href={company.mapsUrl} target="_blank" rel="noopener">
+              {company.street}<br />{company.postalCode} {company.city}
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" id="contact-form" data-email={company.email} novalidate data-reveal>
+      <h3>Skicka en förfrågan</h3>
+      <div class="form__row">
+        <label for="f-name">Namn</label>
+        <input id="f-name" name="namn" type="text" autocomplete="name" required />
+      </div>
+      <div class="form__grid">
+        <div class="form__row">
+          <label for="f-phone">Telefon</label>
+          <input id="f-phone" name="telefon" type="tel" autocomplete="tel" required />
+        </div>
+        <div class="form__row">
+          <label for="f-ort">Ort</label>
+          <input id="f-ort" name="ort" type="text" autocomplete="address-level2" placeholder="t.ex. Hudiksvall" />
+        </div>
+      </div>
+      <div class="form__row">
+        <label for="f-type">Vad gäller det?</label>
+        <select id="f-type" name="arende">
+          {inquiryTypes.map((t) => <option>{t}</option>)}
+        </select>
+      </div>
+      <div class="form__row">
+        <label for="f-msg">Meddelande</label>
+        <textarea id="f-msg" name="meddelande" rows="4" placeholder="Berätta gärna om huset och nuvarande uppvärmning."
+        ></textarea>
+      </div>
+      <button class="btn btn--accent btn--lg btn--block" type="submit">Skicka förfrågan</button>
+      <p class="form__note" role="status" aria-live="polite">
+        Ditt e-postprogram öppnas med meddelandet ifyllt. Hellre prata direkt? Ring <a href={company.phoneHref}
+          >{company.phone}</a
+        >.
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Formuläret öppnar besökarens e-postprogram med ett färdigt meddelande (ingen server krävs).
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const note = form.querySelector<HTMLElement>('.form__note')!;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let firstInvalid: HTMLInputElement | null = null;
+    form.querySelectorAll<HTMLInputElement>('[required]').forEach((field) => {
+      const ok = field.value.trim() !== '';
+      field.classList.toggle('is-invalid', !ok);
+      field.setAttribute('aria-invalid', String(!ok));
+      if (!ok && !firstInvalid) firstInvalid = field;
+    });
+    if (firstInvalid) {
+      (firstInvalid as HTMLInputElement).focus();
+      note.textContent = 'Fyll i namn och telefonnummer så att vi kan nå dig.';
+      return;
+    }
+
+    const d = new FormData(form);
+    const get = (k: string) => String(d.get(k) ?? '').trim();
+    const subject = `Förfrågan via hemsidan: ${get('arende')}`;
+    const body = [
+      `Namn: ${get('namn')}`,
+      `Telefon: ${get('telefon')}`,
+      `Ort: ${get('ort') || '-'}`,
+      `Ärende: ${get('arende')}`,
+      '',
+      get('meddelande'),
+    ].join('\n');
+
+    window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    note.textContent = 'Tack! Ditt e-postprogram öppnas nu – tryck på skicka där.';
+  });
+</script>
+
+<style>
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .contact__list { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 22px; }
+  .contact__list li { display: flex; gap: 16px; align-items: flex-start; }
+  .contact__icon { flex: none; width: 48px; height: 48px; border-radius: 14px; background: var(--navy-800); color: #fff; display: grid; place-items: center; }
+  .contact__icon :global(svg) { width: 22px; height: 22px; }
+  .contact__label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; }
+  .contact__list a { color: var(--navy-900); font-weight: 600; font-size: 1.15rem; text-decoration: none; }
+  .contact__list a:hover { color: var(--copper-600); }
+
+  .form { background: var(--bg-tint); border-radius: var(--radius-lg); padding: 36px; border: 1px solid var(--line); }
+  .form h3 { font-size: 1.4rem; margin-bottom: 22px; }
+  .form__row { margin-bottom: 16px; }
+  .form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+  input, select, textarea {
+    width: 100%; font: inherit; font-size: 1rem; color: var(--ink);
+    background: #fff; border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(31, 95, 168, 0.15); }
+  .is-invalid { border-color: #c0392b; }
+  textarea { resize: vertical; }
+  .form__note { font-size: 0.88rem; color: var(--muted); margin: 14px 0 0; text-align: center; }
+
+  @media (max-width: 900px) { .contact { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .form { padding: 24px; }
+    .form__grid { grid-template-columns: 1fr; }
+  }
+</style>

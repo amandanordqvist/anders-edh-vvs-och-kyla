@@ -1,0 +1,61 @@
+---
+import { Picture } from 'astro:assets';
+import bergvarme from '../assets/img/installation-bergvarme.jpg';
+import luftVatten from '../assets/img/installation-luft-vatten.jpg';
+import servicebil from '../assets/img/servicebil-hudiksvall.jpg';
+
+const items = [
+  { src: bergvarme, caption: 'Större anläggning i fastighet', alt: 'Större värmepumpsinstallation med flera IVT-enheter och ackumulatortankar i en källare' },
+  { src: luftVatten, caption: 'Luft/vatten i villa', alt: 'IVT luft/vattenvärmepump installerad i villa' },
+  { src: servicebil, caption: 'På väg till nästa kund', alt: 'Anders Edh VVS & Kylas blå servicebil med IVT-släp' },
+];
+---
+
+<section class="section section--tint" id="galleri">
+  <div class="container">
+    <header class="section__head" data-reveal>
+      <p class="eyebrow">Från verkligheten</p>
+      <h2>Ett urval av våra uppdrag</h2>
+    </header>
+    <div class="gallery">
+      {
+        items.map((item) => (
+          <figure class="gallery__item" data-reveal>
+            <Picture
+              src={item.src}
+              formats={['avif', 'webp']}
+              widths={[400, 600, 900]}
+              sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 380px"
+              alt={item.alt}
+            />
+            <figcaption>{item.caption}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .gallery__item { margin: 0; position: relative; overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .gallery__item :global(img) { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform 0.5s; }
+  .gallery__item:hover :global(img) { transform: scale(1.04); }
+  .gallery__item figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 20px 18px;
+    background: linear-gradient(transparent, rgba(10, 31, 56, 0.85));
+    color: #fff; font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .gallery { grid-template-columns: 1fr 1fr; }
+    .gallery__item:last-child { grid-column: span 2; }
+    .gallery__item:last-child :global(img) { aspect-ratio: 16 / 10; object-position: center 40%; }
+  }
+  @media (max-width: 600px) {
+    .gallery { grid-template-columns: 1fr; }
+    .gallery__item:last-child { grid-column: auto; }
+    .gallery__item :global(img),
+    .gallery__item:last-child :global(img) { aspect-ratio: 4 / 3; }
+  }
+</style>

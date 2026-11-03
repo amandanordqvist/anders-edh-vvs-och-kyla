@@ -1,0 +1,93 @@
+---
+import { Picture } from 'astro:assets';
+import heroImg from '../assets/img/installation-luft-vatten.jpg';
+import { company, yearsInBusiness } from '../data/site';
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div>
+      <p class="eyebrow">IVT-partner för värmepumpar i Hudiksvall</p>
+      <h1>Varmt, tryggt och energisnålt – installerat av en certifierad IVT-installatör.</h1>
+      <p class="lead">
+        Vi installerar hela IVT:s program – bergvärme, jordvärme, luft/vatten, luft/luft och frånluft – och tar hand om
+        allt från behovsanalys till färdig anläggning. Och vi finns kvar för service under hela värmepumpens livstid.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--accent btn--lg" href="#kontakt">Boka kostnadsfri rådgivning</a>
+        <a class="btn btn--ghost btn--lg" href={company.phoneHref}>Ring {company.phone}</a>
+      </div>
+      <ul class="hero__facts" aria-label="Fakta om oss">
+        <li><strong>{yearsInBusiness} år</strong><span>inom branschen</span></li>
+        <li><strong>Sedan {company.founded}</strong><span>eget företag</span></li>
+        <li><strong>Hundratals</strong><span>installationer i Hudiksvall med omnejd</span></li>
+      </ul>
+    </div>
+
+    <figure class="hero__media">
+      <Picture
+        src={heroImg}
+        formats={['avif', 'webp']}
+        widths={[480, 720, 960]}
+        sizes="(max-width: 900px) 92vw, 460px"
+        alt="Nyinstallerad IVT luft/vattenvärmepump med inomhusmodul och varmvattenberedare i ett grovkök"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <figcaption class="hero__badge">
+        <span class="hero__badge-num">20</span>
+        <span>års trygghet möjlig via IVT&nbsp;Plusförsäkring</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 100% 0%, var(--blue-100), transparent 60%),
+      linear-gradient(180deg, #fff 0%, var(--bg-tint) 100%);
+    padding: 64px 0 88px;
+  }
+  .hero__inner { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin: 28px 0 40px; }
+
+  .hero__facts {
+    list-style: none; margin: 0; padding: 24px 0 0; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .hero__facts strong { display: block; font-family: var(--font-head); font-size: 1.45rem; color: var(--navy-800); }
+  .hero__facts span { font-size: 0.9rem; color: var(--muted); line-height: 1.4; display: block; }
+
+  .hero__media { position: relative; margin: 0; isolation: isolate; }
+  .hero__media :global(img) {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 60%;
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+  }
+  .hero__media::before {
+    content: ''; position: absolute; inset: 24px -24px -24px 24px;
+    border-radius: var(--radius-lg); background: var(--navy-800); z-index: -1;
+  }
+  .hero__badge {
+    position: absolute; left: -28px; bottom: 36px;
+    display: flex; align-items: center; gap: 12px; max-width: 250px;
+    background: #fff; border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow-lg);
+    font-size: 0.88rem; line-height: 1.35; color: var(--muted);
+  }
+  .hero__badge-num { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--copper-500); line-height: 1; }
+
+  @media (max-width: 1080px) { .hero__inner { gap: 48px; } }
+  @media (max-width: 900px) {
+    .hero { padding: 40px 0 64px; }
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__media { max-width: 460px; margin: 0 auto; width: calc(100% - 24px); }
+    .hero__badge { left: -12px; }
+  }
+  @media (max-width: 600px) {
+    .hero__actions .btn { width: 100%; }
+    .hero__facts { grid-template-columns: 1fr 1fr; }
+    .hero__facts li:last-child { grid-column: span 2; }
+    .hero__media::before { inset: 16px -12px -16px 16px; }
+  }
+</style>
