@@ -16,6 +16,9 @@ export const company = {
     'https://www.google.com/maps/search/?api=1&query=Lars+Hamr%C3%A9ns+v%C3%A4g+4%2C+824+34+Hudiksvall',
 } as const;
 
+/** Orter i närområdet (används i text och i strukturdata för Google). Bekräfta listan. */
+export const areas = ['Hudiksvall', 'Iggesund', 'Delsbo', 'Forsa', 'Njutånger', 'Sörforsa'];
+
 export const yearsInBusiness = new Date().getFullYear() - company.founded;
 
 export const nav = [
@@ -27,13 +30,14 @@ export const nav = [
 
 export type PumpIcon = 'berg' | 'luftvatten' | 'luftluft' | 'franluft';
 
-export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: string; arende: string }[] = [
+export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: string; arende: string; href: string }[] = [
   {
     icon: 'berg',
     title: 'Bergvärme & jordvärme',
     text: 'Hämtar lagrad solenergi ur berget eller marken. Jämn, effektiv värme och varmvatten året runt – även de kallaste vinterdagarna.',
     fit: 'Hus med vattenburen värme',
     arende: 'Bergvärme / jordvärme',
+    href: '/bergvarme-hudiksvall',
   },
   {
     icon: 'luftvatten',
@@ -41,6 +45,7 @@ export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: stri
     text: 'Tar värme ur uteluften och leder den till element, golvvärme och varmvatten. Ett bra val när borrning inte är möjlig.',
     fit: 'Ersätter olja, el- eller vedpanna',
     arende: 'Luft/vatten',
+    href: '/luft-vatten-varmepump-hudiksvall',
   },
   {
     icon: 'luftluft',
@@ -48,6 +53,7 @@ export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: stri
     text: 'Ett smidigt och prisvärt sätt att sänka elkostnaden, eller ett komplement till annan uppvärmning. Kan även kyla sommartid.',
     fit: 'Hus med direktverkande el',
     arende: 'Luft/luft',
+    href: '/luft-luft-varmepump-hudiksvall',
   },
   {
     icon: 'franluft',
@@ -55,6 +61,7 @@ export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: stri
     text: 'Återvinner värmen i husets ventilationsluft och använder den till värme och varmvatten. Kompakt och tyst.',
     fit: 'Hus med mekanisk frånluft',
     arende: 'Frånluft',
+    href: '/franluftsvarmepump-hudiksvall',
   },
 ];
 

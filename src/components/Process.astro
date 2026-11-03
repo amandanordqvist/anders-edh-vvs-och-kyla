@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
-import vanImg from '../assets/img/servicebil-hudiksvall.jpg';
+import workImg from '../assets/img/ivt-installator.jpg';
 import { steps } from '../data/site';
 ---
 
@@ -13,7 +13,7 @@ import { steps } from '../data/site';
         <p>Totalentreprenad – du har en kontaktperson genom hela projektet och en installatör som är specialutbildad inom värmepumpar.</p>
       </div>
 
-      <ol class="steps">
+      <ol class="steps" data-animate>
         {
           steps.map((s, i) => (
             <li class="step" data-reveal style={`--i: ${i}`}>
@@ -27,27 +27,35 @@ import { steps } from '../data/site';
         }
       </ol>
 
-      <div class="extra" data-reveal>
-        <span class="extra__icon"><Icon name="wrench" /></span>
-        <p><strong>Även VVS- och rörarbeten.</strong> Installationer, reparationer och servicejobb – alla uppdrag med kvalitet och noggrannhet.</p>
-      </div>
     </div>
 
-    <figure class="media" data-reveal style="--i: 1">
-      <Picture
-        src={vanImg}
-        formats={['avif', 'webp']}
-        widths={[480, 720, 960]}
-        sizes="(max-width: 900px) 92vw, 460px"
-        alt="Anders Edh VVS & Kylas blå servicebil med IVT-släp"
-      />
-      <figcaption>Vi kommer hem till dig i Hudiksvall med omnejd.</figcaption>
-    </figure>
+    <div class="aside">
+      <figure class="media" data-reveal="image">
+        <Picture
+          src={workImg}
+          formats={['avif', 'webp']}
+          widths={[596]}
+          sizes="(max-width: 900px) 92vw, 500px"
+          alt="Certifierad IVT-installatör på plats hemma hos kund i Hudiksvall"
+        />
+      </figure>
+      <p class="caption" data-reveal>Vi kommer hem till dig i Hudiksvall med omnejd.</p>
+      <a class="extra" href="/service-varmepump-hudiksvall" data-reveal style="--i: 1">
+        <span class="extra__icon"><Icon name="wrench" /></span>
+        <p><strong>Service och VVS-arbeten.</strong> Felsökning, underhåll, installationer och reparationer – alla uppdrag med kvalitet och noggrannhet.</p>
+        <span class="extra__arrow"><Icon name="arrow" /></span>
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
-  .layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .steps::after { content: ''; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; background: var(--blue-700); transform-origin: top; transform: scaleY(0); transition: transform 1800ms var(--ease) 200ms; }
+  .steps.is-in::after { transform: scaleY(1); }
+  :global(html:not(.js)) .steps::after { transform: scaleY(1); }
+  .step__num { transition: transform 500ms var(--ease), background-color 300ms ease; transition-delay: calc(var(--i) * 300ms + 200ms); }
+  :global(.js) .step:not(.is-in) .step__num { transform: scale(0.4); background: var(--line); }
   .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-6); position: relative; }
   .steps::before { content: ''; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; background: var(--line); }
   .step { display: grid; grid-template-columns: 44px 1fr; gap: var(--s-4); position: relative; }
@@ -55,18 +63,22 @@ import { steps } from '../data/site';
   .step h3 { margin: 8px 0 4px; }
   .step p { margin: 0; color: var(--muted); }
 
-  .extra { display: flex; gap: var(--s-4); align-items: flex-start; margin-top: var(--s-8); padding: var(--s-6); background: #fff; border-radius: var(--radius); border: 1px solid var(--line); }
+  .extra { display: flex; gap: var(--s-4); align-items: center; margin-top: var(--s-6); padding: var(--s-6); background: #fff; border-radius: var(--radius); border: 1px solid var(--line); text-decoration: none; transition: border-color 200ms ease, box-shadow 200ms ease; }
+  .extra:hover { border-color: var(--blue-700); box-shadow: var(--shadow-md); }
+  .extra__arrow { flex: none; color: var(--blue-700); transition: transform 200ms var(--ease); }
+  .extra__arrow :global(svg) { width: 22px; height: 22px; }
+  .extra:hover .extra__arrow { transform: translateX(4px); }
+  .caption { margin: var(--s-3) 0 0; font-size: var(--fs-sm); color: var(--muted); }
   .extra p { margin: 0; color: var(--muted); }
   .extra strong { color: var(--ink); }
   .extra__icon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--blue-100); color: var(--blue-700); }
   .extra__icon :global(svg) { width: 22px; height: 22px; }
 
   .media { margin: 0; }
-  .media :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 22% 40%; border-radius: var(--radius-lg); }
-  .media figcaption { margin-top: var(--s-3); font-size: var(--fs-sm); color: var(--muted); }
+  .media { border-radius: var(--radius-lg); overflow: hidden; }
+  .media :global(img) { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 40%; }
 
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; }
-    .media :global(img) { aspect-ratio: 16 / 10; }
   }
 </style>

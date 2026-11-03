@@ -1,12 +1,18 @@
 ---
 import Icon from './Icon.astro';
 import { company, inquiryTypes } from '../data/site';
+
+interface Props {
+  arende?: string;
+  title?: string;
+}
+const { arende, title = 'Kostnadsfri rådgivning, besiktning och energikalkyl' } = Astro.props;
 ---
 
 <section class="section" id="kontakt">
   <div class="container layout">
     <div class="info" data-reveal>
-      <h2>Kostnadsfri rådgivning, besiktning och energikalkyl</h2>
+      <h2>{title}</h2>
       <p class="lead">Ring, mejla eller skicka en förfrågan så hör vi av oss. Vi hjälper dig hitta rätt värmepump för ditt hus.</p>
 
       <ul class="list">
@@ -70,7 +76,7 @@ import { company, inquiryTypes } from '../data/site';
       <div class="field">
         <label for="f-type">Vad gäller det?</label>
         <select id="f-type" name="arende">
-          {inquiryTypes.map((t) => <option>{t}</option>)}
+          {inquiryTypes.map((t) => <option selected={t === arende}>{t}</option>)}
         </select>
       </div>
       <div class="field">

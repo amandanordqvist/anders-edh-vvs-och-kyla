@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /tack
+
+Sitemap: https://anders-edh-vvs.netlify.app/sitemap-index.xml

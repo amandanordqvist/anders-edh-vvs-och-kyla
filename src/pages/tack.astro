@@ -5,8 +5,7 @@ import Footer from '../components/Footer.astro';
 import { company } from '../data/site';
 ---
 
-<Layout title={`Tack för din förfrågan | ${company.name}`} description="Tack för din förfrågan – vi hör av oss så snart vi kan.">
-  <meta name="robots" content="noindex" slot="head" />
+<Layout title={`Tack för din förfrågan | ${company.name}`} description="Tack för din förfrågan – vi hör av oss så snart vi kan." noindex>
   <Header />
   <main id="main" class="section">
     <div class="container thanks">

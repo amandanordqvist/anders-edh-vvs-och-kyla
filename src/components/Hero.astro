@@ -8,16 +8,16 @@ import { company, yearsInBusiness } from '../data/site';
 <section class="hero">
   <div class="container hero__grid">
     <div class="hero__text">
-      <h1>Värmepumpar i Hudiksvall</h1>
-      <p class="hero__lede">
-        Installation och service av IVT-värmepumpar. Som auktoriserad IVT-partner tar vi hand om allt – från rådgivning och
-        energikalkyl till färdig anläggning och service under hela livstiden.
+      <h1 class="load" style="--d: 0">Värmepumpar i Hudiksvall</h1>
+      <p class="hero__lede load" style="--d: 1">
+        Behöver du en ny värmepump i Hudiksvall? Som auktoriserad IVT-partner installerar och servar vi bergvärme,
+        luft/vatten, luft/luft och frånluft – från kostnadsfri rådgivning och energikalkyl till färdig anläggning.
       </p>
-      <div class="hero__actions">
+      <div class="hero__actions load" style="--d: 2">
         <a class="btn btn--primary" href="#kontakt">Boka kostnadsfri rådgivning <Icon name="arrow" /></a>
         <a class="btn btn--outline" href={company.phoneHref}><Icon name="phone" /> {company.phone}</a>
       </div>
-      <ul class="hero__points">
+      <ul class="hero__points load" style="--d: 3">
         <li><Icon name="check" /> Auktoriserad IVT-installatör</li>
         <li><Icon name="check" /> {yearsInBusiness} år i branschen</li>
         <li><Icon name="check" /> Lokalt i Hudiksvall</li>
@@ -25,18 +25,20 @@ import { company, yearsInBusiness } from '../data/site';
     </div>
 
     <figure class="hero__media">
+      <div class="hero__img load-image">
       <Picture
         src={heroImg}
         formats={['avif', 'webp']}
         widths={[480, 720, 960]}
         sizes="(max-width: 900px) 92vw, 520px"
-        alt="Nyinstallerad IVT luft/vattenvärmepump med varmvattenberedare i ett grovkök"
+        alt="Nyinstallerad IVT luft/vattenvärmepump med varmvattenberedare i en villa i Hudiksvall"
         loading="eager"
         fetchpriority="high"
       />
-      <figcaption class="hero__badge">
+      </div>
+      <figcaption class="hero__badge load" style="--d: 5"><span class="float hero__badge-inner">
         <span class="hero__badge-icon"><Icon name="shield" /></span>
-        <span><strong>Upp till 20 års trygghet</strong>med IVT Plusförsäkring</span>
+        <span><strong>Upp till 20 års trygghet</strong>med IVT Plusförsäkring</span></span>
       </figcaption>
     </figure>
   </div>
@@ -54,8 +56,9 @@ import { company, yearsInBusiness } from '../data/site';
 
   .hero__media { position: relative; margin: 0; }
   .hero__media :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 62%; border-radius: var(--radius-lg); }
-  .hero__badge {
-    position: absolute; left: -24px; bottom: 32px;
+  .hero__img { border-radius: var(--radius-lg); overflow: hidden; }
+  .hero__badge { position: absolute; left: -24px; bottom: 32px; }
+  .hero__badge-inner {
     display: flex; align-items: center; gap: 12px; padding: 14px 18px;
     background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-lg);
     font-size: var(--fs-sm); color: var(--muted); line-height: 1.35;

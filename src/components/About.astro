@@ -7,22 +7,22 @@ import { company, yearsInBusiness } from '../data/site';
 
 <section class="section" id="om-oss">
   <div class="container layout">
-    <figure class="media" data-reveal>
+    <figure class="media" data-reveal="left">
       <Picture
         src={teamImg}
         formats={['avif', 'webp']}
         widths={[480, 720, 960]}
         sizes="(max-width: 900px) 92vw, 540px"
-        alt="Anders Edh VVS & Kyla i IVT:s visningsvagn bland värmepumpar"
+        alt="Anders Edh VVS & Kyla, IVT-partner i Hudiksvall, bland IVT-värmepumpar"
       />
       <div class="stat">
-        <strong>{yearsInBusiness} år</strong>
+        <strong data-count={yearsInBusiness} data-suffix=" år">{yearsInBusiness} år</strong>
         <span>i branschen – eget företag sedan {company.founded}</span>
       </div>
     </figure>
 
-    <div class="text" data-reveal style="--i: 1">
-      <h2>Lång erfarenhet, lokalt i Hudiksvall</h2>
+    <div class="text" data-reveal="right" style="--i: 1">
+      <h2 class="head-line">Lång erfarenhet, lokalt i Hudiksvall</h2>
       <p class="lead">
         Jag har jobbat i {yearsInBusiness} år inom branschen och samlat på mig lång erfarenhet och kunskap om VVS. Mitt eget
         företag har jag drivit sedan {company.founded}.

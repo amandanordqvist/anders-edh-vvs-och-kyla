@@ -93,11 +93,45 @@ a { color: var(--blue-700); }
 .btn--white { background: #fff; color: var(--blue-900); }
 .btn--white:hover { background: var(--blue-100); }
 
-/* Inträde vid scroll – innehållet syns alltid utan JS */
+/* ---------- Rörelse ----------
+   Allt innehåll syns utan JavaScript och för den som valt minskad rörelse. */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease), transform 700ms var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+  /* Inträde vid scroll, med varianter */
+  .js [data-reveal] {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 700ms var(--ease), transform 900ms var(--ease);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  .js [data-reveal='left'] { transform: translateX(-40px); }
+  .js [data-reveal='right'] { transform: translateX(40px); }
+  .js [data-reveal='scale'] { transform: scale(0.94); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
+
+  /* Bild som öppnas uppifrån och zoomar ut */
+  /* (Klippet ligger på bilden inuti, så att elementet självt räknas som synligt av observern.) */
+  .js [data-reveal='image'] { opacity: 1; transform: none; }
+  .js [data-reveal='image'] picture { display: block; height: 100%; clip-path: inset(0 0 100% 0); transition: clip-path 1100ms var(--ease); transition-delay: calc(var(--i, 0) * 120ms); }
+  .js [data-reveal='image'] img { transform: scale(1.15); transition: transform 1600ms var(--ease); }
+  .js [data-reveal='image'].is-in picture { clip-path: inset(0); }
+  .js [data-reveal='image'].is-in img { transform: none; }
+
+  /* Toppen laddar in direkt med en kort, stegvis animation (kräver inte JS) */
+  .load { animation: load-rise 800ms var(--ease) both; animation-delay: calc(var(--d, 0) * 110ms + 80ms); }
+  .load-image { animation: load-image 1300ms var(--ease) both 150ms; }
+  .float { animation: float 5s ease-in-out infinite 1.4s; }
 }
+@keyframes load-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes load-image { from { opacity: 0; transform: scale(1.06); clip-path: inset(8% 8% 8% 8% round var(--radius-lg)); } to { opacity: 1; transform: none; clip-path: inset(0 round var(--radius-lg)); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Sektionsrubrik: kort blå linje som ritas ut */
+.section__head h2::after, .head-line::after {
+  content: ''; display: block; width: 56px; height: 4px; margin-top: 18px; border-radius: 2px; background: var(--blue-700);
+  transform-origin: left; transition: transform 900ms var(--ease) 250ms;
+}
+.js .section__head:not(.is-in) h2::after { transform: scaleX(0); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 1ms !important; animation: none !important; }

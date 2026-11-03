@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { company, nav } from '../data/site';
+import { services } from '../data/services';
 const year = new Date().getFullYear();
 ---
 
@@ -27,6 +28,12 @@ const year = new Date().getFullYear();
         {company.postalCode} {company.city}
       </p>
     </div>
+    <nav aria-label="Tjänster">
+      <p class="title">Tjänster</p>
+      <ul>
+        {services.map((s) => <li><a href={`/${s.slug}`}>{s.h1.replace(' i Hudiksvall', '')}</a></li>)}
+      </ul>
+    </nav>
     <nav aria-label="Sidfot">
       <p class="title">Sidan</p>
       <ul>
@@ -64,7 +71,7 @@ const year = new Date().getFullYear();
   .cta h2 { color: #fff; font-size: var(--fs-xl); }
   .cta p { margin: 4px 0 0; }
 
-  .cols { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--s-8); padding-block: var(--s-12); }
+  .cols { display: grid; grid-template-columns: 1.6fr 1fr 1.1fr 0.9fr; gap: var(--s-8); padding-block: var(--s-12); }
   .cols p { margin: 0; }
   .name { color: #fff; font-weight: 700; font-size: var(--fs-lg); margin-bottom: var(--s-2) !important; }
   .cols > div:first-child p:last-child { max-width: 36ch; }
@@ -82,9 +89,11 @@ const year = new Date().getFullYear();
   .call :global(svg) { width: 20px; height: 20px; }
   .call.is-shown { transform: none; }
 
-  @media (max-width: 760px) {
+  @media (max-width: 1000px) {
     .cols { grid-template-columns: 1fr 1fr; }
     .cols > div:first-child { grid-column: span 2; }
+  }
+  @media (max-width: 760px) {
     .call { display: inline-flex; }
     .footer { padding-bottom: 72px; }
   }

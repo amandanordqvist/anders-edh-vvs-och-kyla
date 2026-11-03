@@ -16,10 +16,12 @@ import { guarantees } from '../data/site';
     <div class="grid">
       {
         guarantees.map((g, i) => (
-          <div class:list={['item', { 'item--highlight': i === guarantees.length - 1 }]} data-reveal style={`--i: ${i}`}>
-            <span class="item__num">{g.num}</span>
+          <div data-reveal="scale" style={`--i: ${i}`}>
+          <div class:list={['item', { 'item--highlight': i === guarantees.length - 1 }]}>
+            <span class="item__num" data-count={/^\d+ år$/.test(g.num) ? parseInt(g.num) : undefined} data-suffix=" år">{g.num}</span>
             <h3>{g.title}</h3>
             <p>{g.text}</p>
+          </div>
           </div>
         ))
       }
@@ -36,7 +38,9 @@ import { guarantees } from '../data/site';
   .head p { margin: var(--s-4) 0 0; font-size: var(--fs-lg); }
 
   .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-4); }
-  .item { padding: var(--s-8) var(--s-6); border-radius: var(--radius); background: rgb(255 255 255 / 0.06); }
+  .item { height: 100%; padding: var(--s-8) var(--s-6); border-radius: var(--radius); background: rgb(255 255 255 / 0.06); transition: background-color 250ms ease, transform 250ms var(--ease); }
+  .item:hover { background: rgb(255 255 255 / 0.1); transform: translateY(-4px); }
+  .item--highlight:hover { background: var(--blue-600); }
   .item__num { display: block; font-size: var(--fs-2xl); font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: var(--s-4); }
   .item h3 { color: #fff; margin-bottom: var(--s-2); }
   .item p { margin: 0; font-size: 0.975rem; }

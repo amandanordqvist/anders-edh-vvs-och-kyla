@@ -2,27 +2,40 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import Areas from '../components/Areas.astro';
 import HeatPumps from '../components/HeatPumps.astro';
 import Process from '../components/Process.astro';
 import Guarantee from '../components/Guarantee.astro';
 import About from '../components/About.astro';
 import Gallery from '../components/Gallery.astro';
+import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import { faq } from '../data/faq';
+
+const schema = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
 ---
 
 <Layout
-  title="Värmepumpar i Hudiksvall | Anders Edh VVS & Kyla AB – IVT-partner"
-  description="Anders Edh VVS & Kyla AB är auktoriserad IVT-återförsäljare och installatör i Hudiksvall sedan 1988. Bergvärme, luft/vatten, luft/luft och frånluft – installation och service. Kostnadsfri rådgivning: 070-207 32 55."
+  title="Värmepump Hudiksvall – installation & service | Anders Edh VVS & Kyla"
+  description="Värmepump i Hudiksvall? Auktoriserad IVT-partner sedan 1988. Vi installerar och servar bergvärme, luft/vatten, luft/luft och frånluft. Kostnadsfri rådgivning – ring 070-207 32 55."
+  schema={schema}
 >
   <Header />
   <main id="main">
     <Hero />
+    <Areas />
     <HeatPumps />
     <Process />
     <Guarantee />
     <About />
     <Gallery />
+    <Faq />
     <Contact />
   </main>
   <Footer />

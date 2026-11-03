@@ -1,7 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Sätt den riktiga domänen här när den är bestämd (används för canonical-länk och delningsbilder).
-  // site: 'https://www.example.se',
+  // Byt till den egna domänen när den är kopplad (t.ex. 'https://www.andersedh.se').
+  site: 'https://anders-edh-vvs.netlify.app',
+  trailingSlash: 'never',
+  build: { format: 'file' },
+  integrations: [sitemap({ filter: (page) => !page.includes('/tack') })],
 });
