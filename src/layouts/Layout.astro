@@ -58,6 +58,7 @@ const jsonLd = {
       if ('IntersectionObserver' in window) document.documentElement.classList.add('js');
     </script>
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Hoppa till innehållet</a>

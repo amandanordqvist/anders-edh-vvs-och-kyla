@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { company } from '../data/site';
+---
+
+<Layout title={`Tack för din förfrågan | ${company.name}`} description="Tack för din förfrågan – vi hör av oss så snart vi kan.">
+  <meta name="robots" content="noindex" slot="head" />
+  <Header />
+  <main id="main" class="section">
+    <div class="container thanks">
+      <p class="eyebrow">Förfrågan skickad</p>
+      <h1>Tack! Vi hör av oss så snart vi kan.</h1>
+      <p class="lead">Brådskande? Ring oss direkt på <a href={company.phoneHref}>{company.phone}</a>.</p>
+      <a class="btn btn--primary btn--lg" href="/">Tillbaka till startsidan</a>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .thanks { max-width: 720px; min-height: 40vh; }
+</style>

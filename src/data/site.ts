@@ -19,11 +19,11 @@ export const company = {
 export const yearsInBusiness = new Date().getFullYear() - company.founded;
 
 export const nav = [
-  { href: '#varmepumpar', label: 'Värmepumpar' },
-  { href: '#tjanster', label: 'Tjänster' },
-  { href: '#trygghet', label: 'Trygghet' },
-  { href: '#om-oss', label: 'Om oss' },
-  { href: '#kontakt', label: 'Kontakt' },
+  { href: '/#varmepumpar', label: 'Värmepumpar' },
+  { href: '/#tjanster', label: 'Tjänster' },
+  { href: '/#trygghet', label: 'Trygghet' },
+  { href: '/#om-oss', label: 'Om oss' },
+  { href: '/#kontakt', label: 'Kontakt' },
 ];
 
 export type HeatPumpIcon = 'berg' | 'luftvatten' | 'luftluft' | 'franluft';

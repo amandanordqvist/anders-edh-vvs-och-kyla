@@ -33,8 +33,23 @@ import { company, inquiryTypes } from '../data/site';
       </ul>
     </div>
 
-    <form class="form" id="contact-form" data-email={company.email} novalidate data-reveal>
+    <form
+      class="form"
+      id="contact-form"
+      name="kontakt"
+      method="POST"
+      action="/tack"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      novalidate
+      data-reveal
+    >
       <h3>Skicka en förfrågan</h3>
+      <input type="hidden" name="form-name" value="kontakt" />
+      <input type="hidden" name="subject" value="Ny förfrågan från hemsidan (%{submissionId})" />
+      <p class="visually-hidden" aria-hidden="true">
+        <label>Fyll inte i detta: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
       <div class="form__row">
         <label for="f-name">Namn</label>
         <input id="f-name" name="namn" type="text" autocomplete="name" required />
@@ -45,9 +60,13 @@ import { company, inquiryTypes } from '../data/site';
           <input id="f-phone" name="telefon" type="tel" autocomplete="tel" required />
         </div>
         <div class="form__row">
-          <label for="f-ort">Ort</label>
-          <input id="f-ort" name="ort" type="text" autocomplete="address-level2" placeholder="t.ex. Hudiksvall" />
+          <label for="f-email">E-post <span class="optional">(valfritt)</span></label>
+          <input id="f-email" name="email" type="email" autocomplete="email" />
         </div>
+      </div>
+      <div class="form__row">
+        <label for="f-ort">Ort</label>
+        <input id="f-ort" name="ort" type="text" autocomplete="address-level2" placeholder="t.ex. Hudiksvall" />
       </div>
       <div class="form__row">
         <label for="f-type">Vad gäller det?</label>
@@ -62,7 +81,7 @@ import { company, inquiryTypes } from '../data/site';
       </div>
       <button class="btn btn--accent btn--lg btn--block" type="submit">Skicka förfrågan</button>
       <p class="form__note" role="status" aria-live="polite">
-        Ditt e-postprogram öppnas med meddelandet ifyllt. Hellre prata direkt? Ring <a href={company.phoneHref}
+        Vi återkommer så snart vi kan. Hellre prata direkt? Ring <a href={company.phoneHref}
           >{company.phone}</a
         >.
       </p>
@@ -71,39 +90,47 @@ import { company, inquiryTypes } from '../data/site';
 </section>
 
 <script>
-  // Formuläret öppnar besökarens e-postprogram med ett färdigt meddelande (ingen server krävs).
+  // Skickar formuläret till Netlify Forms utan sidomladdning.
+  // Utan JavaScript skickas det som vanligt och besökaren hamnar på /tack.
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const note = form.querySelector<HTMLElement>('.form__note')!;
+  const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const phone = note.querySelector('a')!.outerHTML;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let firstInvalid: HTMLInputElement | null = null;
+    let firstInvalid: HTMLInputElement | undefined;
     form.querySelectorAll<HTMLInputElement>('[required]').forEach((field) => {
       const ok = field.value.trim() !== '';
       field.classList.toggle('is-invalid', !ok);
       field.setAttribute('aria-invalid', String(!ok));
-      if (!ok && !firstInvalid) firstInvalid = field;
+      if (!ok) firstInvalid ??= field;
     });
     if (firstInvalid) {
-      (firstInvalid as HTMLInputElement).focus();
+      firstInvalid.focus();
       note.textContent = 'Fyll i namn och telefonnummer så att vi kan nå dig.';
       return;
     }
 
-    const d = new FormData(form);
-    const get = (k: string) => String(d.get(k) ?? '').trim();
-    const subject = `Förfrågan via hemsidan: ${get('arende')}`;
-    const body = [
-      `Namn: ${get('namn')}`,
-      `Telefon: ${get('telefon')}`,
-      `Ort: ${get('ort') || '-'}`,
-      `Ärende: ${get('arende')}`,
-      '',
-      get('meddelande'),
-    ].join('\n');
-
-    window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    note.textContent = 'Tack! Ditt e-postprogram öppnas nu – tryck på skicka där.';
+    button.disabled = true;
+    button.textContent = 'Skickar…';
+    try {
+      const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      form.classList.add('is-sent');
+      note.textContent = 'Tack! Din förfrågan är skickad – vi hör av oss så snart vi kan.';
+    } catch {
+      note.innerHTML = `Något gick fel när förfrågan skulle skickas. Ring gärna ${phone} i stället.`;
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Skicka förfrågan';
+    }
   });
 </script>
 
@@ -131,6 +158,10 @@ import { company, inquiryTypes } from '../data/site';
   .is-invalid { border-color: #c0392b; }
   textarea { resize: vertical; }
   .form__note { font-size: 0.88rem; color: var(--muted); margin: 14px 0 0; text-align: center; }
+  .is-sent .form__note { color: #1e7a46; font-weight: 600; font-size: 1rem; }
+  .optional { font-weight: 400; color: var(--muted); }
+  button:disabled { opacity: 0.7; cursor: wait; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   @media (max-width: 900px) { .contact { grid-template-columns: 1fr; } }
   @media (max-width: 600px) {
