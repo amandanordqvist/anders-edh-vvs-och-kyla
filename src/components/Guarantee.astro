@@ -1,22 +1,23 @@
 ---
+import Icon from './Icon.astro';
 import { guarantees } from '../data/site';
 ---
 
-<section class="section section--dark" id="trygghet">
+<section class="guarantee" id="trygghet">
   <div class="container">
-    <header class="section__head" data-reveal>
-      <p class="eyebrow">Trygghet som ingår från dag ett</p>
-      <h2>Garanti och försäkring i samma paket</h2>
-      <p>Vid köp av en IVT-värmepump via oss får du ett komplett skyddsprogram som kombinerar garanti och försäkring.</p>
-    </header>
+    <div class="head" data-reveal>
+      <span class="head__icon"><Icon name="shield" /></span>
+      <div>
+        <h2>Trygghet som ingår från dag ett</h2>
+        <p>Köper du en IVT-värmepump via oss får du ett komplett skyddsprogram som kombinerar garanti och försäkring.</p>
+      </div>
+    </div>
 
-    <div class="shields">
+    <div class="grid">
       {
-        guarantees.map((g) => (
-          <div class:list={['shield', { 'shield--accent': g.accent }]} data-reveal>
-            <span class="shield__num">
-              {g.num} <small>år</small>
-            </span>
+        guarantees.map((g, i) => (
+          <div class:list={['item', { 'item--highlight': i === guarantees.length - 1 }]} data-reveal style={`--i: ${i}`}>
+            <span class="item__num">{g.num}</span>
             <h3>{g.title}</h3>
             <p>{g.text}</p>
           </div>
@@ -27,18 +28,23 @@ import { guarantees } from '../data/site';
 </section>
 
 <style>
-  .shields { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-  .shield {
-    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-lg); padding: 30px 26px;
-  }
-  .shield h3 { color: #fff; }
-  .shield p { margin: 0; font-size: 0.97rem; }
-  .shield__num { display: block; font-family: var(--font-head); font-weight: 800; font-size: 3rem; line-height: 1; color: #fff; margin-bottom: 16px; }
-  .shield__num small { font-size: 1.1rem; font-weight: 700; color: var(--copper-300); }
-  .shield--accent { background: var(--copper-500); border-color: var(--copper-500); color: #fff; }
-  .shield--accent .shield__num small { color: #ffe1cb; }
+  .guarantee { background: var(--blue-900); color: #c9d5ec; padding-block: var(--section); }
+  .head { display: flex; gap: var(--s-6); align-items: flex-start; max-width: 760px; margin-bottom: var(--s-12); }
+  .head__icon { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: var(--radius); background: rgb(255 255 255 / 0.1); color: #fff; }
+  .head__icon :global(svg) { width: 30px; height: 30px; }
+  h2 { color: #fff; }
+  .head p { margin: var(--s-4) 0 0; font-size: var(--fs-lg); }
 
-  @media (max-width: 1080px) { .shields { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .shields { grid-template-columns: 1fr; } }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-4); }
+  .item { padding: var(--s-8) var(--s-6); border-radius: var(--radius); background: rgb(255 255 255 / 0.06); }
+  .item__num { display: block; font-size: var(--fs-2xl); font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: var(--s-4); }
+  .item h3 { color: #fff; margin-bottom: var(--s-2); }
+  .item p { margin: 0; font-size: 0.975rem; }
+  .item--highlight { background: var(--blue-700); color: #e3eafa; }
+
+  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .head { flex-direction: column; gap: var(--s-4); }
+  }
 </style>

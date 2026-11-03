@@ -5,59 +5,87 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="container footer__inner">
-    <div class="footer__about">
-      <strong class="footer__name">{company.name}</strong>
-      <p>Auktoriserad IVT-partner – installation och service av värmepumpar i Hudiksvall med omnejd sedan {company.founded}.</p>
+  <div class="container cta">
+    <div>
+      <h2>Funderar du på värmepump?</h2>
+      <p>Ring oss för en kostnadsfri genomgång av ditt hus.</p>
     </div>
-    <p>
-      <a href={company.phoneHref}>{company.phone}</a><br />
-      {company.street}<br />
-      {company.postalCode} {company.city}
-    </p>
-    <nav class="footer__links" aria-label="Sidfot">
-      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a class="btn btn--white" href={company.phoneHref}><Icon name="phone" /> {company.phone}</a>
+  </div>
+
+  <div class="container cols">
+    <div>
+      <p class="name">{company.name}</p>
+      <p>Auktoriserad IVT-partner. Installation och service av värmepumpar i Hudiksvall med omnejd sedan {company.founded}.</p>
+    </div>
+    <div>
+      <p class="title">Kontakt</p>
+      <p>
+        <a href={company.phoneHref}>{company.phone}</a><br />
+        <a href={`mailto:${company.email}`}>Skicka e-post</a><br />
+        {company.street}<br />
+        {company.postalCode} {company.city}
+      </p>
+    </div>
+    <nav aria-label="Sidfot">
+      <p class="title">Sidan</p>
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href="/#kontakt">Kontakt</a></li>
+      </ul>
     </nav>
   </div>
-  <div class="container footer__bottom">
+
+  <div class="container bottom">
     <span>© {year} {company.name}</span>
     <span>IVT är ett varumärke som tillhör Bosch Thermoteknik AB.</span>
   </div>
 </footer>
 
-<a class="call-fab" href={company.phoneHref} aria-label={`Ring ${company.phone}`}>
-  <Icon name="phone" />
-  Ring oss
-</a>
+<a class="call" href={company.phoneHref} aria-label={`Ring ${company.phone}`}><Icon name="phone" /> Ring oss</a>
+
+<script>
+  // Ringknappen på mobil visas när toppen har scrollats förbi.
+  const call = document.querySelector<HTMLElement>('.call')!;
+  const hero = document.querySelector('.hero');
+  if (hero) new IntersectionObserver(([e]) => call.classList.toggle('is-shown', !e.isIntersecting)).observe(hero);
+  else call.classList.add('is-shown');
+</script>
 
 <style>
-  .footer { background: var(--navy-900); color: #b9c8da; padding: 64px 0 24px; font-size: 0.95rem; }
-  .footer a { color: #fff; text-decoration: none; }
-  .footer a:hover { color: var(--copper-300); }
-  .footer__inner {
-    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
-    padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  .footer__name { display: block; font-family: var(--font-head); font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
-  .footer__links { display: flex; flex-direction: column; gap: 8px; }
-  .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 22px; font-size: 0.82rem; color: #8597ae; }
+  .footer { background: var(--blue-900); color: #b8c5de; font-size: 0.975rem; }
+  .footer a:not(.btn) { color: #fff; text-decoration: none; }
+  .footer a:not(.btn):hover { text-decoration: underline; }
 
-  .call-fab {
+  .cta {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s-6); flex-wrap: wrap;
+    padding-block: var(--s-12); border-bottom: 1px solid rgb(255 255 255 / 0.12);
+  }
+  .cta h2 { color: #fff; font-size: var(--fs-xl); }
+  .cta p { margin: 4px 0 0; }
+
+  .cols { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--s-8); padding-block: var(--s-12); }
+  .cols p { margin: 0; }
+  .name { color: #fff; font-weight: 700; font-size: var(--fs-lg); margin-bottom: var(--s-2) !important; }
+  .cols > div:first-child p:last-child { max-width: 36ch; }
+  .title { color: #fff; font-weight: 600; margin-bottom: var(--s-2) !important; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+
+  .bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-2); padding-block: var(--s-6); border-top: 1px solid rgb(255 255 255 / 0.12); font-size: var(--fs-sm); color: #8fa0bf; }
+
+  .call {
     display: none; position: fixed; right: 16px; bottom: 16px; z-index: 60;
-    align-items: center; gap: 8px; padding: 14px 20px; border-radius: 999px;
-    background: var(--copper-500); color: #fff; font-weight: 700; text-decoration: none;
-    box-shadow: 0 10px 28px rgba(208, 112, 47, 0.45);
+    align-items: center; gap: 8px; min-height: 52px; padding: 0 20px; border-radius: 999px;
+    background: var(--blue-700); color: #fff; font-weight: 600; text-decoration: none; box-shadow: var(--shadow-lg);
+    transform: translateY(150%); transition: transform 250ms var(--ease);
   }
-  .call-fab :global(svg) { width: 20px; height: 20px; }
+  .call :global(svg) { width: 20px; height: 20px; }
+  .call.is-shown { transform: none; }
 
-  @media (max-width: 900px) {
-    .footer__inner { grid-template-columns: 1fr 1fr; }
-    .footer__about { grid-column: span 2; }
-    .footer { padding-bottom: 96px; }
-    .call-fab { display: inline-flex; }
-  }
-  @media (max-width: 600px) {
-    .footer__inner { grid-template-columns: 1fr; }
-    .footer__about { grid-column: auto; }
+  @media (max-width: 760px) {
+    .cols { grid-template-columns: 1fr 1fr; }
+    .cols > div:first-child { grid-column: span 2; }
+    .call { display: inline-flex; }
+    .footer { padding-bottom: 72px; }
   }
 </style>

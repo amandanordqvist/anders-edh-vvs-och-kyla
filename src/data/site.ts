@@ -20,66 +20,56 @@ export const yearsInBusiness = new Date().getFullYear() - company.founded;
 
 export const nav = [
   { href: '/#varmepumpar', label: 'Värmepumpar' },
-  { href: '/#tjanster', label: 'Tjänster' },
+  { href: '/#sa-funkar-det', label: 'Så funkar det' },
   { href: '/#trygghet', label: 'Trygghet' },
   { href: '/#om-oss', label: 'Om oss' },
-  { href: '/#kontakt', label: 'Kontakt' },
 ];
 
-export type HeatPumpIcon = 'berg' | 'luftvatten' | 'luftluft' | 'franluft';
+export type PumpIcon = 'berg' | 'luftvatten' | 'luftluft' | 'franluft';
 
-export const heatPumps: {
-  icon: HeatPumpIcon;
-  title: string;
-  text: string;
-  points: string[];
-}[] = [
+export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: string; arende: string }[] = [
   {
     icon: 'berg',
     title: 'Bergvärme & jordvärme',
-    text: 'Hämtar solenergi som lagrats i berggrunden eller marken. Ger jämn och mycket effektiv värme och varmvatten året runt – även de kallaste vinterdagarna i Hälsingland.',
-    points: ['Hög och stabil verkningsgrad', 'Lång livslängd, låg driftkostnad', 'För vattenburna system'],
+    text: 'Hämtar lagrad solenergi ur berget eller marken. Jämn, effektiv värme och varmvatten året runt – även de kallaste vinterdagarna.',
+    fit: 'Hus med vattenburen värme',
+    arende: 'Bergvärme / jordvärme',
   },
   {
     icon: 'luftvatten',
     title: 'Luft/vatten',
-    text: 'Tar värme ur uteluften och för den vidare till husets vattenburna element eller golvvärme samt varmvattnet. Ett bra alternativ när borrning inte är möjlig.',
-    points: ['Ingen borrning eller markarbete', 'Ersätter olja, el- eller vedpanna', 'Värme och varmvatten'],
+    text: 'Tar värme ur uteluften och leder den till element, golvvärme och varmvatten. Ett bra val när borrning inte är möjlig.',
+    fit: 'Ersätter olja, el- eller vedpanna',
+    arende: 'Luft/vatten',
   },
   {
     icon: 'luftluft',
     title: 'Luft/luft',
-    text: 'Ett smidigt och prisvärt sätt att sänka kostnaden i hus med direktverkande el eller som komplement till annan uppvärmning. Kan även ge svalka sommartid.',
-    points: ['Snabb installation', 'Värme på vintern, kyla på sommaren', 'Låg investeringskostnad'],
+    text: 'Ett smidigt och prisvärt sätt att sänka elkostnaden, eller ett komplement till annan uppvärmning. Kan även kyla sommartid.',
+    fit: 'Hus med direktverkande el',
+    arende: 'Luft/luft',
   },
   {
     icon: 'franluft',
     title: 'Frånluft',
-    text: 'Återvinner energin i husets varma ventilationsluft innan den lämnar huset och använder den till värme och varmvatten. Perfekt för hus med mekanisk frånluftsventilation.',
-    points: [
-      'Tar tillvara energi som annars går förlorad',
-      'Ventilation, värme och varmvatten i ett',
-      'Kompakt – passar i tvättstuga eller klädkammare',
-    ],
+    text: 'Återvinner värmen i husets ventilationsluft och använder den till värme och varmvatten. Kompakt och tyst.',
+    fit: 'Hus med mekanisk frånluft',
+    arende: 'Frånluft',
   },
 ];
 
 export const steps = [
-  { title: 'Kostnadsfri rådgivning', text: 'Vi lyssnar på dina behov och svarar på frågor om vilken typ av värmepump som passar.' },
-  { title: 'Besiktning & energikalkyl', text: 'Vi besöker fastigheten, gör en behovsanalys och räknar på vad du kan spara.' },
-  { title: 'Installation', text: 'Vi installerar, driftsätter och justerar in anläggningen – och visar hur den fungerar.' },
-  { title: 'Service hela livstiden', text: 'Vi finns kvar för service, felsökning och underhåll så länge du har din värmepump.' },
+  { title: 'Kostnadsfri rådgivning', text: 'Vi pratar om huset, uppvärmningen i dag och vad du vill uppnå.' },
+  { title: 'Besiktning & energikalkyl', text: 'Vi kommer hem till dig, gör en behovsanalys och räknar på besparingen.' },
+  { title: 'Installation', text: 'Vi installerar, driftsätter och justerar in – och visar hur allt fungerar.' },
+  { title: 'Service hela livstiden', text: 'Vi finns kvar för service, felsökning och underhåll så länge du har pumpen.' },
 ];
 
 export const guarantees = [
-  { num: '3', title: 'Fabriksgaranti', text: 'Alla nya IVT-värmepumpar levereras med 3 års fabriksgaranti.' },
-  {
-    num: '5–6',
-    title: 'Total trygghet',
-    text: 'En kompletterande försäkring förlänger automatiskt tryggheten – totalt 5 eller 6 år beroende på modell.',
-  },
-  { num: '4', title: 'Elektronikförsäkring', text: 'På styrkort och display för bergvärme, luft/vatten och frånluft.' },
-  { num: '20', title: 'IVT Plusförsäkring', text: 'Tryggheten kan sedan förlängas i upp till 20 år.', accent: true },
+  { num: '3 år', title: 'Fabriksgaranti', text: 'Ingår på alla nya IVT-värmepumpar.' },
+  { num: '5–6 år', title: 'Total trygghet', text: 'En kompletterande försäkring förlänger tryggheten automatiskt, beroende på modell.' },
+  { num: '4 år', title: 'Elektronikförsäkring', text: 'På styrkort och display för bergvärme, luft/vatten och frånluft.' },
+  { num: '20 år', title: 'IVT Plusförsäkring', text: 'Tryggheten kan sedan förlängas i upp till 20 år.' },
 ];
 
 export const inquiryTypes = [

@@ -1,123 +1,104 @@
-/* Globala tokens och grundstilar. Komponentspecifik CSS ligger i respektive .astro-fil. */
+/* Anders Edh VVS & Kyla – designsystem
+   Ljust, rent och tydligt. En typsnittsfamilj, servicebilens blå som huvudfärg. */
 
 :root {
-  --navy-900: #0a1f38;
-  --navy-800: #0f2a4a;
-  --navy-700: #163a63;
-  --blue-500: #1f5fa8;
-  --blue-100: #e6eef8;
-  --copper-500: #d0702f;
-  --copper-600: #b65d22;
-  --copper-300: #f0a46e;
-  --copper-100: #fbeee3;
-  --ink: #142235;
-  --muted: #55657a;
-  --line: #dde3ea;
-  --bg: #ffffff;
-  --bg-tint: #f4f6f9;
+  /* Färg */
+  --blue-900: #0e2552;   /* rubriker, mörka ytor */
+  --blue-700: #1a3f8f;   /* servicebilens blå – knappar, länkar */
+  --blue-600: #2150b0;   /* hover */
+  --blue-100: #e8eefa;   /* ikonplattor, markeringar */
+  --blue-50: #f4f7fd;
+  --ink: #0f1b2d;        /* brödtext */
+  --muted: #4b5870;      /* sekundär text (7:1 mot vitt) */
+  --line: #e2e7ef;
+  --surface: #ffffff;
+  --surface-alt: #f5f7fa;
+  --success: #1c7c4a;
 
-  --font-head: 'Archivo Variable', system-ui, sans-serif;
-  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Typ – Inter genomgående */
+  --font: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-sm: 0.875rem;                               /* 14 */
+  --fs-base: 1.0625rem;                            /* 17 */
+  --fs-lg: 1.1875rem;                              /* 19 */
+  --fs-xl: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);/* 20–24 */
+  --fs-2xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);/* 28–40 */
+  --fs-3xl: clamp(2.25rem, 1.6rem + 2.8vw, 3.75rem);/* 36–60 */
 
-  --radius: 14px;
-  --radius-lg: 22px;
-  --shadow: 0 1px 2px rgba(10, 31, 56, 0.06), 0 8px 24px rgba(10, 31, 56, 0.08);
-  --shadow-lg: 0 24px 60px rgba(10, 31, 56, 0.18);
-  --container: 1180px;
+  /* Rum (4 px-bas) */
+  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-8: 32px; --s-12: 48px; --s-16: 64px;
+  --section: clamp(72px, 8vw, 120px);
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 32px);
+
+  /* Form */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgb(14 37 82 / 0.06);
+  --shadow-md: 0 8px 24px rgb(14 37 82 / 0.08);
+  --shadow-lg: 0 20px 48px rgb(14 37 82 / 0.14);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
+  font-family: var(--font);
+  font-size: var(--fs-base);
   line-height: 1.65;
   color: var(--ink);
-  background: var(--bg);
+  background: var(--surface);
   -webkit-font-smoothing: antialiased;
 }
 
-img { max-width: 100%; height: auto; display: block; }
-a { color: var(--blue-500); }
+img { display: block; max-width: 100%; height: auto; }
 svg { display: block; }
 
-h1, h2, h3 {
-  font-family: var(--font-head);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  margin: 0 0 0.6em;
-  color: var(--navy-900);
-}
-h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); font-weight: 800; }
-h2 { font-size: clamp(1.75rem, 3.2vw, 2.5rem); font-weight: 800; }
-h3 { font-size: 1.2rem; font-weight: 700; }
+h1, h2, h3 { color: var(--blue-900); margin: 0; text-wrap: balance; }
+h1 { font-size: var(--fs-3xl); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; }
+h2 { font-size: var(--fs-2xl); font-weight: 750; line-height: 1.15; letter-spacing: -0.025em; }
+h3 { font-size: var(--fs-lg); font-weight: 650; line-height: 1.3; letter-spacing: -0.01em; }
 p { margin: 0 0 1em; }
+a { color: var(--blue-700); }
 
-.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
 
-.skip-link {
-  position: absolute; left: -999px; top: 8px; z-index: 100;
-  background: var(--navy-800); color: #fff; padding: 10px 16px; border-radius: 8px;
-}
-.skip-link:focus { left: 8px; }
+.section { padding-block: var(--section); }
+.section--alt { background: var(--surface-alt); }
+.section__head { max-width: 640px; margin-bottom: var(--s-12); }
+.section__head p { color: var(--muted); font-size: var(--fs-lg); margin: var(--s-4) 0 0; }
 
-:focus-visible { outline: 3px solid var(--copper-500); outline-offset: 3px; border-radius: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; z-index: 100; background: var(--blue-900); color: #fff; padding: 10px 16px; border-radius: var(--radius-sm); }
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 3px solid var(--blue-600); outline-offset: 3px; border-radius: 4px; }
 
-.eyebrow {
-  display: inline-block;
-  font-size: 0.8rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--copper-600);
-  margin-bottom: 0.9rem;
-}
-.lead { font-size: 1.18rem; color: var(--muted); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
 /* Knappar */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
-  font-family: var(--font-body); font-weight: 600; font-size: 1rem;
-  padding: 0.75em 1.3em; border-radius: 999px; border: 2px solid transparent;
-  text-decoration: none; cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 24px; border-radius: var(--radius-sm); border: 2px solid transparent;
+  font: inherit; font-weight: 600; font-size: var(--fs-base); text-decoration: none; cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
 }
-.btn svg { width: 18px; height: 18px; }
-.btn:hover { transform: translateY(-1px); }
-.btn--lg { padding: 0.95em 1.6em; font-size: 1.05rem; }
-.btn--block { width: 100%; }
-.btn--primary { background: var(--navy-800); color: #fff; }
-.btn--primary:hover { background: var(--navy-700); }
-.btn--accent { background: var(--copper-500); color: #fff; box-shadow: 0 8px 20px rgba(208, 112, 47, 0.3); }
-.btn--accent:hover { background: var(--copper-600); }
-.btn--ghost { border-color: var(--navy-800); color: var(--navy-800); background: transparent; }
-.btn--ghost:hover { background: var(--navy-800); color: #fff; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn:active { transform: scale(0.98); }
+.btn--primary { background: var(--blue-700); color: #fff; }
+.btn--primary:hover { background: var(--blue-600); }
+.btn--outline { background: var(--surface); color: var(--blue-900); border-color: var(--line); }
+.btn--outline:hover { border-color: var(--blue-700); color: var(--blue-700); }
+.btn--white { background: #fff; color: var(--blue-900); }
+.btn--white:hover { background: var(--blue-100); }
 
-/* Sektioner */
-.section { padding: 96px 0; }
-.section--tint { background: var(--bg-tint); }
-.section--dark { background: linear-gradient(160deg, var(--navy-900), var(--navy-700)); color: #d6e1ee; }
-.section__head { max-width: 720px; margin-bottom: 52px; }
-.section__head p:not(.eyebrow) { color: var(--muted); font-size: 1.1rem; }
-.section--dark .section__head h2 { color: #fff; }
-.section--dark .section__head p:not(.eyebrow) { color: #b9c8da; }
-.section--dark .eyebrow { color: var(--copper-300); }
-
-@media (max-width: 900px) {
-  .section { padding: 72px 0; }
+/* Inträde vid scroll – innehållet syns alltid utan JS */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease), transform 700ms var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+  .js [data-reveal].is-in { opacity: 1; transform: none; }
 }
-@media (max-width: 600px) {
-  body { font-size: 1rem; }
-  .container { padding: 0 16px; }
-}
-
-/* Tona in vid scroll (aktiveras bara när JS finns) */
-.js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.js [data-reveal].is-visible { opacity: 1; transform: none; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; animation: none !important; }
-  .js [data-reveal] { opacity: 1; transform: none; }
+  *, *::before, *::after { transition-duration: 1ms !important; animation: none !important; }
 }

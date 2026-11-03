@@ -1,80 +1,68 @@
 ---
 import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
 import teamImg from '../assets/img/anders-edh-ivt.jpg';
-import installerImg from '../assets/img/ivt-installator.jpg';
 import { company, yearsInBusiness } from '../data/site';
 ---
 
 <section class="section" id="om-oss">
-  <div class="container about">
-    <figure class="about__media" data-reveal>
+  <div class="container layout">
+    <figure class="media" data-reveal>
       <Picture
-        class="about__main"
         src={teamImg}
         formats={['avif', 'webp']}
         widths={[480, 720, 960]}
         sizes="(max-width: 900px) 92vw, 540px"
-        alt="Anders Edh VVS & Kyla i IVT:s visningsvagn med värmepumpar"
+        alt="Anders Edh VVS & Kyla i IVT:s visningsvagn bland värmepumpar"
       />
-      <Picture
-        class="about__small"
-        src={installerImg}
-        formats={['avif', 'webp']}
-        widths={[320, 596]}
-        sizes="(max-width: 900px) 50vw, 300px"
-        alt="Installatör i arbetskläder med IVT Värmepumpar-logotyp"
-      />
+      <div class="stat">
+        <strong>{yearsInBusiness} år</strong>
+        <span>i branschen – eget företag sedan {company.founded}</span>
+      </div>
     </figure>
 
-    <div data-reveal>
-      <p class="eyebrow">Om oss</p>
-      <h2>{yearsInBusiness} år inom branschen</h2>
+    <div class="text" data-reveal style="--i: 1">
+      <h2>Lång erfarenhet, lokalt i Hudiksvall</h2>
       <p class="lead">
-        Välkommen att höra av dig till Anders Edh VVS &amp; Kyla. Jag har jobbat nästan 40 år inom branschen, vilket
-        betyder att jag samlat på mig lång erfarenhet och kunskap om VVS.
+        Jag har jobbat i {yearsInBusiness} år inom branschen och samlat på mig lång erfarenhet och kunskap om VVS. Mitt eget
+        företag har jag drivit sedan {company.founded}.
       </p>
       <p>
-        Mitt eget företag har jag drivit sedan {company.founded} och i dag arbetar jag med alla typer av VVS- och
-        rörarbeten. Till mig kan du höra av dig om du behöver hjälp med installationer, reparationer eller servicejobb.
-      </p>
-      <p>
-        Som certifierad IVT-installatör är jag specialutbildad inom värmepumpsteknik. Vi har genomfört hundratals
-        framgångsrika installationer i Hudiksvall och omnejd, och vet vad som krävs för ett effektivt och långsiktigt
-        värmesystem.
+        I dag arbetar jag med alla typer av VVS- och rörarbeten. Som certifierad IVT-installatör är jag specialutbildad inom
+        värmepumpsteknik, och vi har genomfört hundratals installationer i Hudiksvall och omnejd.
       </p>
       <ul class="checks">
-        <li>Auktoriserad återförsäljare och installatör av IVT Värmepumpar</li>
-        <li>Lokalt företag i Hudiksvall – nära till service</li>
-        <li>Kvalitet, engagemang och noggrannhet i varje uppdrag</li>
+        <li><Icon name="check" /> Auktoriserad återförsäljare och installatör av IVT Värmepumpar</li>
+        <li><Icon name="check" /> Hundratals installationer i Hudiksvall med omnejd</li>
+        <li><Icon name="check" /> Kvalitet, engagemang och noggrannhet i varje uppdrag</li>
       </ul>
-      <p class="signature">– Anders Edh</p>
+      <p class="sign">Anders Edh <span>Ägare</span></p>
     </div>
   </div>
 </section>
 
 <style>
-  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-  .about__media { position: relative; margin: 0 0 60px; }
-  .about__media :global(.about__main) {
-    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .media { position: relative; margin: 0; }
+  .media :global(img) { width: 100%; aspect-ratio: 4 / 3.3; object-fit: cover; object-position: center 30%; border-radius: var(--radius-lg); }
+  .stat {
+    position: absolute; right: -16px; bottom: -24px; padding: 18px 22px; max-width: 220px;
+    background: var(--blue-700); color: #dbe5fb; border-radius: var(--radius); box-shadow: var(--shadow-lg); line-height: 1.35; font-size: var(--fs-sm);
   }
-  .about__media :global(.about__small) {
-    position: absolute; right: -24px; bottom: -60px; width: 55%;
-    border-radius: var(--radius); border: 6px solid #fff; box-shadow: var(--shadow-lg); aspect-ratio: 16 / 9; object-fit: cover;
-  }
+  .stat strong { display: block; color: #fff; font-size: var(--fs-2xl); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
 
-  .checks { list-style: none; padding: 0; margin: 24px 0; }
-  .checks li { position: relative; padding-left: 34px; margin-bottom: 12px; font-weight: 500; }
-  .checks li::before {
-    content: ''; position: absolute; left: 0; top: 2px; width: 22px; height: 22px; border-radius: 50%;
-    background: var(--copper-100)
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.2 4.2L19 7' fill='none' stroke='%23b65d22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      center / 14px no-repeat;
-  }
-  .signature { font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; color: var(--navy-800); font-style: italic; }
+  h2 { margin-bottom: var(--s-6); }
+  .lead { font-size: var(--fs-lg); color: var(--ink); }
+  .text p { color: var(--muted); }
+  .text .lead { color: var(--ink); }
+  .checks { list-style: none; padding: 0; margin: var(--s-6) 0; display: grid; gap: var(--s-3); }
+  .checks li { display: flex; gap: 10px; font-weight: 500; }
+  .checks :global(svg) { width: 22px; height: 22px; flex: none; color: var(--success); }
+  .sign { font-weight: 700; color: var(--blue-900) !important; margin: 0; }
+  .sign span { display: block; font-weight: 400; color: var(--muted); font-size: var(--fs-sm); }
 
   @media (max-width: 900px) {
-    .about { grid-template-columns: 1fr; gap: 40px; }
-    .about__media :global(.about__small) { right: -8px; }
+    .layout { grid-template-columns: 1fr; gap: 56px; }
+    .stat { right: 12px; bottom: -28px; }
   }
 </style>

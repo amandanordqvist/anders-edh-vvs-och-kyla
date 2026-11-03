@@ -1,6 +1,5 @@
 ---
 import '@fontsource-variable/inter';
-import '@fontsource-variable/archivo';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import ogSource from '../assets/img/servicebil-hudiksvall.jpg';
@@ -44,7 +43,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f2a4a" />
+    <meta name="theme-color" content="#0e2552" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {canonical && <link rel="canonical" href={canonical} />}
 
@@ -63,5 +62,20 @@ const jsonLd = {
   <body>
     <a class="skip-link" href="#main">Hoppa till innehållet</a>
     <slot />
+    <script>
+      // Inträden: varje [data-reveal] tonar in en gång när den kommer in i bild.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    </script>
   </body>
 </html>

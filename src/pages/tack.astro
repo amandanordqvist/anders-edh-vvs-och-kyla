@@ -10,10 +10,9 @@ import { company } from '../data/site';
   <Header />
   <main id="main" class="section">
     <div class="container thanks">
-      <p class="eyebrow">Förfrågan skickad</p>
-      <h1>Tack! Vi hör av oss så snart vi kan.</h1>
-      <p class="lead">Brådskande? Ring oss direkt på <a href={company.phoneHref}>{company.phone}</a>.</p>
-      <a class="btn btn--primary btn--lg" href="/">Tillbaka till startsidan</a>
+      <h1>Tack! Vi hör av oss snart.</h1>
+      <p>Din förfrågan har kommit fram. Brådskande? Ring oss direkt på <a href={company.phoneHref}>{company.phone}</a>.</p>
+      <a class="btn btn--primary" href="/">Till startsidan</a>
     </div>
   </main>
   <Footer />
@@ -21,4 +20,5 @@ import { company } from '../data/site';
 
 <style>
   .thanks { max-width: 720px; min-height: 40vh; }
+  .thanks p { font-size: var(--fs-lg); color: var(--muted); margin: 24px 0 32px; }
 </style>

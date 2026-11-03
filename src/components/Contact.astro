@@ -4,30 +4,25 @@ import { company, inquiryTypes } from '../data/site';
 ---
 
 <section class="section" id="kontakt">
-  <div class="container contact">
-    <div data-reveal>
-      <p class="eyebrow">Kontakt</p>
+  <div class="container layout">
+    <div class="info" data-reveal>
       <h2>Kostnadsfri rådgivning, besiktning och energikalkyl</h2>
-      <p class="lead">
-        Välkommen att kontakta {company.name}! Ring, mejla eller skicka en förfrågan via formuläret så hör vi av oss.
-      </p>
+      <p class="lead">Ring, mejla eller skicka en förfrågan så hör vi av oss. Vi hjälper dig hitta rätt värmepump för ditt hus.</p>
 
-      <ul class="contact__list">
+      <ul class="list">
         <li>
-          <span class="contact__icon"><Icon name="phone" /></span>
-          <div><span class="contact__label">Telefon</span><a href={company.phoneHref}>{company.phone}</a></div>
+          <span class="list__icon"><Icon name="phone" /></span>
+          <div><span class="list__label">Telefon</span><a href={company.phoneHref}>{company.phone}</a></div>
         </li>
         <li>
-          <span class="contact__icon"><Icon name="mail" /></span>
-          <div><span class="contact__label">E-post</span><a href={`mailto:${company.email}`}>Skicka e-post</a></div>
+          <span class="list__icon"><Icon name="mail" /></span>
+          <div><span class="list__label">E-post</span><a href={`mailto:${company.email}`}>Skicka e-post</a></div>
         </li>
         <li>
-          <span class="contact__icon"><Icon name="pin" /></span>
+          <span class="list__icon"><Icon name="pin" /></span>
           <div>
-            <span class="contact__label">Adress</span>
-            <a href={company.mapsUrl} target="_blank" rel="noopener">
-              {company.street}<br />{company.postalCode} {company.city}
-            </a>
+            <span class="list__label">Adress</span>
+            <a href={company.mapsUrl} target="_blank" rel="noopener">{company.street}, {company.postalCode} {company.city}</a>
           </div>
         </li>
       </ul>
@@ -43,72 +38,69 @@ import { company, inquiryTypes } from '../data/site';
       netlify-honeypot="bot-field"
       novalidate
       data-reveal
+      style="--i: 1"
     >
-      <h3>Skicka en förfrågan</h3>
       <input type="hidden" name="form-name" value="kontakt" />
       <input type="hidden" name="subject" value="Ny förfrågan från hemsidan (%{submissionId})" />
       <p class="visually-hidden" aria-hidden="true">
         <label>Fyll inte i detta: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
       </p>
-      <div class="form__row">
-        <label for="f-name">Namn</label>
-        <input id="f-name" name="namn" type="text" autocomplete="name" required />
-      </div>
-      <div class="form__grid">
-        <div class="form__row">
+
+      <h3>Skicka en förfrågan</h3>
+      <div class="row2">
+        <div class="field">
+          <label for="f-name">Namn</label>
+          <input id="f-name" name="namn" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
           <label for="f-phone">Telefon</label>
           <input id="f-phone" name="telefon" type="tel" autocomplete="tel" required />
         </div>
-        <div class="form__row">
-          <label for="f-email">E-post <span class="optional">(valfritt)</span></label>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="f-email">E-post <span>(valfritt)</span></label>
           <input id="f-email" name="email" type="email" autocomplete="email" />
         </div>
+        <div class="field">
+          <label for="f-ort">Ort</label>
+          <input id="f-ort" name="ort" type="text" autocomplete="address-level2" placeholder="t.ex. Hudiksvall" />
+        </div>
       </div>
-      <div class="form__row">
-        <label for="f-ort">Ort</label>
-        <input id="f-ort" name="ort" type="text" autocomplete="address-level2" placeholder="t.ex. Hudiksvall" />
-      </div>
-      <div class="form__row">
+      <div class="field">
         <label for="f-type">Vad gäller det?</label>
         <select id="f-type" name="arende">
           {inquiryTypes.map((t) => <option>{t}</option>)}
         </select>
       </div>
-      <div class="form__row">
+      <div class="field">
         <label for="f-msg">Meddelande</label>
-        <textarea id="f-msg" name="meddelande" rows="4" placeholder="Berätta gärna om huset och nuvarande uppvärmning."
-        ></textarea>
+        <textarea id="f-msg" name="meddelande" rows="4" placeholder="Berätta gärna om huset och nuvarande uppvärmning."></textarea>
       </div>
-      <button class="btn btn--accent btn--lg btn--block" type="submit">Skicka förfrågan</button>
-      <p class="form__note" role="status" aria-live="polite">
-        Vi återkommer så snart vi kan. Hellre prata direkt? Ring <a href={company.phoneHref}
-          >{company.phone}</a
-        >.
-      </p>
+      <button class="btn btn--primary submit" type="submit">Skicka förfrågan</button>
+      <p class="note" role="status" aria-live="polite">Vi svarar så snart vi kan. Brådskande? Ring {company.phone}.</p>
     </form>
   </div>
 </section>
 
 <script>
-  // Skickar formuläret till Netlify Forms utan sidomladdning.
-  // Utan JavaScript skickas det som vanligt och besökaren hamnar på /tack.
+  // Skickar till Netlify Forms utan sidomladdning. Utan JavaScript skickas formuläret vanligt och landar på /tack.
   const form = document.getElementById('contact-form') as HTMLFormElement;
-  const note = form.querySelector<HTMLElement>('.form__note')!;
-  const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-  const phone = note.querySelector('a')!.outerHTML;
+  const note = form.querySelector<HTMLElement>('.note')!;
+  const button = form.querySelector<HTMLButtonElement>('.submit')!;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     let firstInvalid: HTMLInputElement | undefined;
     form.querySelectorAll<HTMLInputElement>('[required]').forEach((field) => {
       const ok = field.value.trim() !== '';
-      field.classList.toggle('is-invalid', !ok);
       field.setAttribute('aria-invalid', String(!ok));
       if (!ok) firstInvalid ??= field;
     });
     if (firstInvalid) {
       firstInvalid.focus();
       note.textContent = 'Fyll i namn och telefonnummer så att vi kan nå dig.';
+      note.dataset.state = 'error';
       return;
     }
 
@@ -116,17 +108,14 @@ import { company, inquiryTypes } from '../data/site';
     button.textContent = 'Skickar…';
     try {
       const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
-      });
+      const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
-      form.classList.add('is-sent');
       note.textContent = 'Tack! Din förfrågan är skickad – vi hör av oss så snart vi kan.';
+      note.dataset.state = 'success';
     } catch {
-      note.innerHTML = `Något gick fel när förfrågan skulle skickas. Ring gärna ${phone} i stället.`;
+      note.textContent = 'Något gick fel när förfrågan skulle skickas. Ring gärna 070-207 32 55 i stället.';
+      note.dataset.state = 'error';
     } finally {
       button.disabled = false;
       button.textContent = 'Skicka förfrågan';
@@ -135,37 +124,36 @@ import { company, inquiryTypes } from '../data/site';
 </script>
 
 <style>
-  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-  .contact__list { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 22px; }
-  .contact__list li { display: flex; gap: 16px; align-items: flex-start; }
-  .contact__icon { flex: none; width: 48px; height: 48px; border-radius: 14px; background: var(--navy-800); color: #fff; display: grid; place-items: center; }
-  .contact__icon :global(svg) { width: 22px; height: 22px; }
-  .contact__label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; }
-  .contact__list a { color: var(--navy-900); font-weight: 600; font-size: 1.15rem; text-decoration: none; }
-  .contact__list a:hover { color: var(--copper-600); }
+  .layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .lead { font-size: var(--fs-lg); color: var(--muted); margin: var(--s-6) 0 0; }
+  .list { list-style: none; padding: 0; margin: var(--s-8) 0 0; display: grid; gap: var(--s-4); }
+  .list li { display: flex; gap: var(--s-4); align-items: center; padding: var(--s-4); border-radius: var(--radius); background: var(--surface-alt); }
+  .list__icon { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: #fff; color: var(--blue-700); }
+  .list__icon :global(svg) { width: 22px; height: 22px; }
+  .list__label { display: block; font-size: var(--fs-sm); color: var(--muted); }
+  .list a { color: var(--blue-900); font-weight: 600; text-decoration: none; }
+  .list a:hover { color: var(--blue-700); text-decoration: underline; }
 
-  .form { background: var(--bg-tint); border-radius: var(--radius-lg); padding: 36px; border: 1px solid var(--line); }
-  .form h3 { font-size: 1.4rem; margin-bottom: 22px; }
-  .form__row { margin-bottom: 16px; }
-  .form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+  .form { padding: clamp(24px, 4vw, 40px); background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+  .form h3 { font-size: var(--fs-xl); margin-bottom: var(--s-6); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .field { margin-bottom: var(--s-4); }
+  label { display: block; font-weight: 600; font-size: var(--fs-sm); margin-bottom: 6px; color: var(--ink); }
+  label span { font-weight: 400; color: var(--muted); }
   input, select, textarea {
-    width: 100%; font: inherit; font-size: 1rem; color: var(--ink);
-    background: #fff; border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%; min-height: 48px; padding: 12px 14px; font: inherit; font-size: 1rem; color: var(--ink);
+    background: #fff; border: 1px solid #cfd7e4; border-radius: var(--radius-sm);
+    transition: border-color 150ms ease, box-shadow 150ms ease;
   }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(31, 95, 168, 0.15); }
-  .is-invalid { border-color: #c0392b; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue-700); box-shadow: 0 0 0 4px rgb(26 63 143 / 0.15); }
+  [aria-invalid='true'] { border-color: #c0392b; }
   textarea { resize: vertical; }
-  .form__note { font-size: 0.88rem; color: var(--muted); margin: 14px 0 0; text-align: center; }
-  .is-sent .form__note { color: #1e7a46; font-weight: 600; font-size: 1rem; }
-  .optional { font-weight: 400; color: var(--muted); }
-  button:disabled { opacity: 0.7; cursor: wait; }
-  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .submit { width: 100%; margin-top: var(--s-2); }
+  .submit:disabled { opacity: 0.7; cursor: wait; }
+  .note { margin: var(--s-3) 0 0; font-size: var(--fs-sm); color: var(--muted); text-align: center; }
+  .note[data-state='success'] { color: var(--success); font-weight: 600; }
+  .note[data-state='error'] { color: #b0281c; font-weight: 600; }
 
-  @media (max-width: 900px) { .contact { grid-template-columns: 1fr; } }
-  @media (max-width: 600px) {
-    .form { padding: 24px; }
-    .form__grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .row2 { grid-template-columns: 1fr; gap: 0; } }
 </style>
