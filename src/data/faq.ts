@@ -2,7 +2,7 @@
 export const faq = [
   {
     q: 'Vilken värmepump passar mitt hus i Hudiksvall?',
-    a: 'Det beror på om du har vattenburen värme, hur stor tomten är och vilken ventilation huset har. Bergvärme och luft/vatten passar hus med element eller golvvärme, luft/luft passar hus med direktverkande el och frånluft passar hus med mekanisk frånluftsventilation. Vid en kostnadsfri besiktning går vi igenom vad som passar just ditt hus.',
+    a: 'Det beror på om du har vattenburen värme, hur stor tomten är och vilken ventilation huset har. Bergvärme och luft/vatten passar hus med element eller golvvärme, och frånluft passar hus med mekanisk frånluftsventilation. Vid en kostnadsfri besiktning går vi igenom vad som passar just ditt hus.',
   },
   {
     q: 'Vad ingår när ni installerar en värmepump?',

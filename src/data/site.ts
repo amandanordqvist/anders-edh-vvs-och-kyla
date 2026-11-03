@@ -28,7 +28,7 @@ export const nav = [
   { href: '/#om-oss', label: 'Om oss' },
 ];
 
-export type PumpIcon = 'berg' | 'luftvatten' | 'luftluft' | 'franluft';
+export type PumpIcon = 'berg' | 'luftvatten' | 'franluft';
 
 export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: string; arende: string; href: string }[] = [
   {
@@ -46,14 +46,6 @@ export const heatPumps: { icon: PumpIcon; title: string; text: string; fit: stri
     fit: 'Ersätter olja, el- eller vedpanna',
     arende: 'Luft/vatten',
     href: '/luft-vatten-varmepump-hudiksvall',
-  },
-  {
-    icon: 'luftluft',
-    title: 'Luft/luft',
-    text: 'Ett smidigt och prisvärt sätt att sänka elkostnaden, eller ett komplement till annan uppvärmning. Kan även kyla sommartid.',
-    fit: 'Hus med direktverkande el',
-    arende: 'Luft/luft',
-    href: '/luft-luft-varmepump-hudiksvall',
   },
   {
     icon: 'franluft',
@@ -83,7 +75,6 @@ export const inquiryTypes = [
   'Ny värmepump – rådgivning & offert',
   'Bergvärme / jordvärme',
   'Luft/vatten',
-  'Luft/luft',
   'Frånluft',
   'Service eller felsökning',
   'Övrigt VVS-arbete',

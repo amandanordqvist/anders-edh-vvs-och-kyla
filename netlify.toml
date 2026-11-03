@@ -17,3 +17,9 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
+
+# Luft/luft sköts inte längre av Anders – gamla adressen skickas till startsidan
+[[redirects]]
+  from = "/luft-luft-varmepump-hudiksvall"
+  to = "/"
+  status = 301

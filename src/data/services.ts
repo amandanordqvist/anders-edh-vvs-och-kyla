@@ -2,7 +2,6 @@
 import type { ImageMetadata } from 'astro';
 import bergvarme from '../assets/img/installation-bergvarme.jpg';
 import luftvatten from '../assets/img/installation-luft-vatten.jpg';
-import installator from '../assets/img/ivt-installator.jpg';
 import anders from '../assets/img/anders-edh-ivt.jpg';
 import type { PumpIcon } from './site';
 
@@ -123,46 +122,6 @@ export const services: ServicePage[] = [
       },
     ],
     arende: 'Luft/vatten',
-  },
-  {
-    slug: 'luft-luft-varmepump-hudiksvall',
-    icon: 'luftluft',
-    name: 'Luft/luft',
-    metaTitle: 'Luft/luftvärmepump i Hudiksvall – sänk elkostnaden med IVT',
-    description:
-      'Luft/luftvärmepump i Hudiksvall – ett prisvärt sätt att sänka elkostnaden i hus med direktverkande el. Värme på vintern, svalka på sommaren. Ring 070-207 32 55.',
-    h1: 'Luft/luftvärmepump i Hudiksvall',
-    lede: 'En luft/luftvärmepump värmer luften inomhus med energi från uteluften. Det är ett smidigt och prisvärt sätt att sänka elkostnaden – och den kan ge svalka på sommaren.',
-    image: installator,
-    imageAlt: 'Certifierad IVT-installatör på plats i Hudiksvall',
-    sections: [
-      {
-        h2: 'Så fungerar luft/luft',
-        text: [
-          'En utedel och en innedel arbetar tillsammans. Innedelen blåser ut varm luft i rummet och värmen sprids bäst i hus med öppen planlösning.',
-          'En luft/luftvärmepump värmer inte vattnet i kranen eller elementen, så den är oftast ett komplement till den uppvärmning du redan har.',
-        ],
-      },
-      {
-        h2: 'Snabb installation, låg investering',
-        text: [
-          'Installationen är enkel och går fort jämfört med andra värmepumpar. För hus med direktverkande el är luft/luft ofta det snabbaste sättet att få ner elräkningen.',
-        ],
-      },
-    ],
-    benefits: ['Lägre elkostnad i hus med direktverkande el', 'Snabb installation', 'Låg investeringskostnad', 'Kan även kyla sommartid'],
-    fit: ['Du har direktverkande el eller luftburen värme', 'Huset har öppen planlösning', 'Du vill komplettera befintlig uppvärmning'],
-    faq: [
-      {
-        q: 'Ger en luft/luftvärmepump varmvatten?',
-        a: 'Nej. En luft/luftvärmepump värmer bara luften inomhus. Vill du även värma vatten passar luft/vatten, bergvärme eller frånluft bättre.',
-      },
-      {
-        q: 'Kan den kyla på sommaren?',
-        a: 'Ja, de flesta luft/luftvärmepumpar kan köras baklänges och ge svalka när det är varmt.',
-      },
-    ],
-    arende: 'Luft/luft',
   },
   {
     slug: 'franluftsvarmepump-hudiksvall',
